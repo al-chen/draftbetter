@@ -19,6 +19,8 @@ def getValues(teams, predicted_pts):
 		team_abbrev = teams[a]
 		team_predicted_pts = predicted_pts[a]
 		year = str(datetime.date.today().year)
+		if datetime.date.today().month >= 8:
+			year += 1
 		URL = "http://www.basketball-reference.com/teams/" + team_abbrev + "/" + year + ".html" 
 		html = urlopen(URL).read()
 		# html = str(BeautifulSoup(html))
