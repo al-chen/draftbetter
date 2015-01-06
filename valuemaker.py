@@ -7,8 +7,6 @@ import os
 import datetime
 import csv
 
-abbreviations = ["ATL", "BRK", "BOS", "CHO", "CHI", "CLE", "DAL", "DEN", "DET", "GSW", "HOU", "IND", "LAC", "LAL", "MEM", "MIA", "MIL", "MIN", "NOP", "NYK", "OKC", "ORL", "PHI", "PHO", "POR", "SAC", "SAS", "TOR", "UTA", "WAS"]
-
 def getValues(teams, predicted_pts):
 	dic = {0:0}
 	for i in range(1,11):
@@ -16,10 +14,12 @@ def getValues(teams, predicted_pts):
 	dic[11] = dic[10]
 	total = dic[10]
 	value_map = {}
+
 	for a in range(len(teams)):
 		team_abbrev = teams[a]
 		team_predicted_pts = predicted_pts[a]
-		URL = "http://www.basketball-reference.com/teams/" + team_abbrev + "/2015.html" 
+		year = str(datetime.date.today().year)
+		URL = "http://www.basketball-reference.com/teams/" + team_abbrev + "/" + year + ".html" 
 		html = urlopen(URL).read()
 		# html = str(BeautifulSoup(html))
 		off_rtg_idx = html.find("Off Rtg") + 20
@@ -97,20 +97,10 @@ def getValues(teams, predicted_pts):
 			pred_value = pred_pts + (0.5 * pred_3p) + (1.25 * pred_reb) + (1.5 * pred_ast) + (2.0 * pred_stl) + (2.0 * pred_blk) - (0.5 * pred_tov)
 			pred_value += (1.5 * pred_doubledouble) + (3.0 * pred_tripledouble)
 
+			# Hard-coded name change
 			if name == "Dennis Schr&ouml;der":
 				name = "Dennis Schroder"
 			value_map[name] = pred_value
-
-			# print pred_pts
-			# print pred_3p
-			# print pred_reb
-			# print pred_ast
-			# print pred_stl
-			# print pred_blk
-			# print pred_tov
-			
-			# print "Double-double: " + str(pred_doubledouble)
-			# print pred_tripledouble
 
 			# print "age: " + str(age)
 			# print "g: " + str(g)
@@ -139,6 +129,15 @@ def getValues(teams, predicted_pts):
 			# print "pts: " + str(pts)
 			# print "ortg: " + str(ortg)
 			# print "drtg: " + str(drtg)
+
+			# print pred_pts
+			# print pred_3p
+			# print pred_reb
+			# print pred_ast
+			# print pred_stl
+			# print pred_blk
+			# print pred_tov
+
 	csvname = max(glob.iglob('DKSalaries' + '*.[Cc][Ss][Vv]'), key=os.path.getctime)
 	t = os.path.getctime(csvname)
 	fmt = "%Y-%m-%d"
@@ -153,14 +152,14 @@ def getValues(teams, predicted_pts):
 			DKSalaries = csv.reader(csvDKSalaries, delimiter=',')
 			for row in DKSalaries:
 				if row[0] == "Position":
-					print(row + ["Predicted Value"])
+					# print(row + ["Predicted Value"])
 					DKValues.writerow(row + ["Predicted Value"])
 				else:
 					name = row[1]
 					if name not in value_map:
 						print("Player " + name + " is not in value_map.")
 						continue
-					print(row + [value_map[name]])
+					# print(row + [value_map[name]])
 					DKValues.writerow(row + [str(value_map[name])])
 
 def findStat(searchspace, initial_idx):

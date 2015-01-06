@@ -22,9 +22,8 @@ def getOdds():
 		if idx == 15:
 			break
 		matchup_end = html.find("<", idx)
-		# print html[idx:end]
 		if html[idx:matchup_end] == "Daily Lines":
-			print "Daily lines are currently available"
+			print("Daily lines are currently available")
 			break
 		first_team = ""
 		running_idx = idx
@@ -34,17 +33,15 @@ def getOdds():
 			first_team += html[running_idx]
 			running_idx += 1
 		if len(first_team) > 30:
-			print "First team not found"
+			print("First team not found")
 			break
-
 		first_abbr = team_to_abbr[first_team]
-		# print first_abbr
 
 		second_idx = html.find("at", running_idx) + 3
 		second_end = html.find(",", second_idx)
 		second_team = html[second_idx:second_end]
 		if len(second_team) > 30:
-			print "Second team not found"
+			print("Second team not found")
 			break
 		second_abbr = team_to_abbr[second_team]
 
@@ -56,22 +53,16 @@ def getOdds():
 			a = html.find("""<td style="text-align:center;">""", site_idx) + 31
 			if html[a:a+4] == "EVEN":
 				spread = 0.0
-				# print spread
 			else:
 				b = html.find("""<td width="50%">""", a) + 16
 				b_end = html.find("<", b)
 				b_content = html[b:b_end]
-
 				b_content = b_content.replace("+","",1)
 				if not b_content.replace(".","",1).replace("-","",1).isdigit():
 					print "Spread Error"
 					break
 				spread = float(b_content)
-				# print spread
-			# print sitename + ": " + str(spread)
 			spread_end = html.find("</td>", a) + 36
-			# print "first abbr: " + first_abbr
-			# print html[spread_end:spread_end+3]
 			if html[spread_end:spread_end+3] == "N/A":
 				total = 0.0
 				for abbrev in [first_abbr, second_abbr]:
@@ -84,7 +75,6 @@ def getOdds():
 				c = html.find("""<table cellspacing="1" cellpadding="3" class="tablehead"><tr><td width="50%">""", b_end) + 77
 				if html[c:c+3].isdigit():
 					total = float(html[c:c+3])
-					# print html[c-150:c+50]
 			if spread != None and total != None:
 				break
 		first_points = second_points = total / 2
@@ -94,29 +84,13 @@ def getOdds():
 		teams.append(second_abbr)
 		predicted_pts.append(first_points)
 		predicted_pts.append(second_points)
-	# print teams
-	# print predicted_pts
 	return teams, predicted_pts
-
-# night_teams = ["Knicks", "Kings", "Timberwolves", "Warriors"]
-# night_pts = []
-# for i in range(len(night_teams)):
-# 	night_teams[i] = team_to_abbr[night_teams[i]]
-# 	night_idx = teams.index(night_teams[i])
-# 	night_pts.append(predicted_pts[night_idx])
-# print night_teams
-# print night_pts
-
-
-
-
 
 # Run
 if __name__ == "__main__":
 	teams, predicted_pts = getOdds()
 	valuemaker.getValues(teams, predicted_pts)
 	exclude = sys.argv[1:] + []
-	# print exclude
 	players, positions, salaries, values = writer.writeIlp(exclude)
 	if not players or not positions or not salaries or not values:
 		sys.exit("Error")
@@ -124,6 +98,7 @@ if __name__ == "__main__":
 	output = ilp.fun()
 	total_salary = 0
 	total_value = 0
+	print("Lineup")
 	for i in output:
 		print players[i] + " (" + positions[i] + ")" # - V: " + str(values[i]) + " S: " + str(salaries[i]) + " 1kV/S: " + str(values[i] / salaries[i] * 1000)
 		total_salary += salaries[i]
