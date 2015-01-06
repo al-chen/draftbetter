@@ -178,3 +178,8 @@ def findStat(searchspace, initial_idx):
 		return 0.0, idx
 	end = searchspace.find("<", idx+1)
 	return float(searchspace[idx:end]), end
+
+if __name__ == "__main__":
+	teams = ["LAL"]
+	predicted_pts = [102.0]
+	getValues(teams,predicted_pts)
