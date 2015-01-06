@@ -100,6 +100,8 @@ def getValues(teams, predicted_pts):
 			# Hard-coded name change
 			if name == "Dennis Schr&ouml;der":
 				name = "Dennis Schroder"
+			elif name == "Patrick Mills":
+				name = "Patty Mills"
 			value_map[name] = pred_value
 
 			# print "age: " + str(age)
