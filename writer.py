@@ -142,3 +142,18 @@ def writeIlp(exclude=[], csvname=None, filename=None, cap=50000):
 	f.write("    return lst\n")
 	f.close()
 	return players, positions, salaries, values
+
+if __name__ == "__main__":
+	exclude = []
+	players, positions, salaries, values = writeIlp(exclude)
+	ilp = __import__("ilp" + str(datetime.date.today()))
+	output = ilp.fun()
+	total_salary = 0
+	total_value = 0
+	print("Lineup")
+	for i in output:
+		print players[i] + " (" + positions[i] + ")" # - V: " + str(values[i]) + " S: " + str(salaries[i]) + " 1kV/S: " + str(values[i] / salaries[i] * 1000)
+		total_salary += salaries[i]
+		total_value += values[i]
+	print "Total Value: " + str(total_value)
+	print "Total Salary: " + str(total_salary)
