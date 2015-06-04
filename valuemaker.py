@@ -7,6 +7,91 @@ import os
 import datetime
 import csv
 
+
+# contest_link = 'https://www.draftkings.com/contest/draftteam/6633768'
+
+# html = urlopen(contest_link).read()
+# soup = BeautifulSoup(html)
+
+# type_index = html.find("contestTypeId")
+# type_end = html.find(",", type_index)
+# contestTypeId = html[type_index+14:type_end].strip()
+# print contestTypeId
+
+# id_index = html.find("draftGroupId", type_end)
+# id_end = html.find(",", id_index)
+# draftGroupId = html[id_index+13:id_end].strip()
+# print draftGroupId
+
+# contest_values = urlopen("https://www.draftkings.com/lineup/getavailableplayerscsv?contestTypeId=" + contestTypeId + "&draftGroupId=" + draftGroupId)
+# cr = csv.reader(contest_values)
+# for row in cr:
+# 	print row
+
+# teams = ['GSW', 'HOU']
+# predicted_pts = [109.25, 104.75]
+# for i in range(0,len(teams),2):
+# 	away_team = teams[i]
+# 	home_team = teams[i+1]
+# 	away_predicted = predicted_pts[i]
+# 	home_predicted = predicted_pts[i+1]
+
+# 	year = str(datetime.date.today().year)
+# 	if datetime.date.today().month >= 8:
+# 		year += 1
+# 	away_url = "http://www.basketball-reference.com/teams/" + away_team + "/" + year + ".html" 
+# 	away_html = urlopen(away_url).read()
+# 	# soup = BeautifulSoup(html)
+
+# 	pts_index = away_html.find("PTS/G") + 14
+# 	pts_end = away_html.find(" ", pts_index)
+# 	away_ptsg = float(away_html[pts_index:pts_end])
+
+# 	pts_index = away_html.find("Opp PTS/G") + 18
+# 	pts_end = away_html.find(" ", pts_index)
+# 	away_opp_ptsg = float(away_html[pts_index:pts_end])
+
+# 	pts_index = away_html.find("Off Rtg") + 20
+# 	pts_end = away_html.find(" ", pts_index)
+# 	away_off_rtg = float(away_html[pts_index:pts_end])
+
+# 	pts_index = away_html.find("Def Rtg") + 20
+# 	pts_end = away_html.find(" ", pts_index)
+# 	away_def_rtg = float(away_html[pts_index:pts_end])
+
+# 	home_url = "http://www.basketball-reference.com/teams/" + home_team + "/" + year + ".html" 
+# 	home_html = urlopen(home_url).read()
+# 	# soup = BeautifulSoup(html)
+
+# 	pts_index = home_html.find("PTS/G") + 14
+# 	pts_end = home_html.find(" ", pts_index)
+# 	home_ptsg = float(home_html[pts_index:pts_end])
+
+# 	pts_index = home_html.find("Opp PTS/G") + 18
+# 	pts_end = home_html.find(" ", pts_index)
+# 	home_opp_ptsg = float(home_html[pts_index:pts_end])
+
+# 	pts_index = home_html.find("Off Rtg") + 20
+# 	pts_end = home_html.find(" ", pts_index)
+# 	home_off_rtg = float(home_html[pts_index:pts_end])
+
+# 	pts_index = home_html.find("Def Rtg") + 20
+# 	pts_end = home_html.find(" ", pts_index)
+# 	home_def_rtg = float(home_html[pts_index:pts_end])
+
+# 	away_factor = 0.5
+# 	home_factor = 0.5
+# 	# away_predicted, away_ptsg, home_opp_ptsg
+# 	if away_predicted > away_ptsg:
+# 		if away_ptsg > home_opp_ptsg:
+# 			away_factor = 0.0
+# 			home_factor = 1.0
+
+
+
+# def getValues(teams, predicted_pts, contest_link):
+
+
 def getValues(teams, predicted_pts):
 	dic = {0:0}
 	for i in range(1,11):
